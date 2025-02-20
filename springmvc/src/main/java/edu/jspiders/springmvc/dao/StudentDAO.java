@@ -9,15 +9,18 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
-
 import edu.jspiders.springmvc.dto.Student;
+
 
 @Component
 public class StudentDAO {
-
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager entityManager;
 	private EntityTransaction entityTransaction;
+	
+	
+//==================Opening Connection of the Database=================================//
+//======================================================================================//
 
 	private void openConnection() {
 		entityManagerFactory = Persistence.createEntityManagerFactory("springmvc");
@@ -25,6 +28,9 @@ public class StudentDAO {
 		entityTransaction = entityManager.getTransaction();
 	}
 
+//======================Closing connection of the Database=============================//
+//======================================================================================//
+	
 	private void closeConnection() {
 		if (entityManagerFactory != null)
 			entityManagerFactory.close();
@@ -36,6 +42,9 @@ public class StudentDAO {
 		}
 	}
 
+//============Opening Connection of Database (Method of adding Data of the Student======//
+//======================================================================================//
+	
 	public void addStudent(Student student) {
 		openConnection();
 		entityTransaction.begin();
@@ -44,6 +53,9 @@ public class StudentDAO {
 		closeConnection();
 	}
 
+//==============Finding AllStudent Method for fetching All student Data=================//
+//=======================================================================================//
+	
 	@SuppressWarnings("unchecked")
 	public List<Student> findAllStudents() {
 		openConnection();
@@ -53,21 +65,30 @@ public class StudentDAO {
 		return students;
 	}
 
+//=======================================================================================================//
+//======================================================================================================//
+
 	public void deleteStudentById(int id) {
 		openConnection();
 		entityTransaction.begin();
 		Student studentToBeDeleted = entityManager.find(Student.class, id);
 		entityManager.remove(studentToBeDeleted);
 		entityTransaction.commit();
-		closeConnection();
+		closeConnection();		
 	}
 
+//=====================================================================================================//
+//====================================================================================================//
+	
 	public Student findStudentById(int id) {
 		openConnection();
 		Student student = entityManager.find(Student.class, id);
 		closeConnection();
 		return student;
 	}
+	
+//===================================================================================================//
+//===================================================================================================//
 
 	public void updateStudent(int id, String name, String email, long mobile, String course) {
 		openConnection();
@@ -80,10 +101,14 @@ public class StudentDAO {
 		entityManager.persist(studentToBeUpdated);
 		entityTransaction.commit();
 		closeConnection();
-
 	}
-
-	public Student findStudentByMobile(long mobile) {
+	
+	
+//===================================================================================================//
+//===================================================================================================//
+	
+	
+	public Student findStudentBymobile(long mobile) {
 		openConnection();
 		Query query = entityManager.createQuery("SELECT student FROM Student student WHERE student.mobile = ?1");
 		query.setParameter(1, mobile);
@@ -92,4 +117,22 @@ public class StudentDAO {
 		return student;
 	}
 
+//=====================================================================================================//
+//=====================================================================================================//
+
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Student> findStudentByname(String name) {
+		openConnection();
+		Query query = entityManager.createQuery("SELECT students FROM Student students WHERE students.name=?1 ");
+		query.setParameter(1, name);
+		List<Student> students = query.getResultList();
+		closeConnection();
+		return students;
+	}
+
+
+//	===================================================================================================//
+	
 }

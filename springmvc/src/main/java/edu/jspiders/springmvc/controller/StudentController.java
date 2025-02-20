@@ -21,7 +21,7 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 
-	@RequestMapping(path = "/add-student", method = RequestMethod.POST)
+	@RequestMapping(path = "/add_student", method = RequestMethod.POST)
 	protected String addStudent(@RequestParam(name = "name") String name, @RequestParam(name = "email") String email,
 			@RequestParam(name = "mobile") long mobile, @RequestParam(name = "course") String course,
 			ModelMap modelMap) {
@@ -37,6 +37,8 @@ public class StudentController {
 		}
 		return "students";
 	}
+//==================================================================================================================//
+//==================================================================================================================//
 
 	@RequestMapping(path = "/students")
 	protected String findAllStudents(ModelMap modelMap, HttpSession httpSession) {
@@ -51,6 +53,8 @@ public class StudentController {
 		} else
 			return "login";
 	}
+//==========================================================================================================================//
+//=========================================================================================================================//
 
 	@RequestMapping(path = "/delete-student")
 	protected String deleteStudentById(@RequestParam(name = "id") int id, ModelMap modelMap, HttpSession httpSession) {
@@ -63,9 +67,9 @@ public class StudentController {
 				if (students != null)
 					modelMap.addAttribute("students", students);
 				else
-					modelMap.addAttribute("message", "No data available");
+					modelMap.addAttribute("message", "No data Available");
 			} else {
-				modelMap.addAttribute("message", "Something went wrong");
+				modelMap.addAttribute("message", "Something Went Wrong");
 				if (students != null)
 					modelMap.addAttribute("students", students);
 				else
@@ -75,7 +79,11 @@ public class StudentController {
 		} else {
 			return "login";
 		}
+
 	}
+
+//==============================================================================================================//
+//===============================================================================================================//
 
 	@RequestMapping(path = "/edit-student")
 	protected String editStudent(@RequestParam(name = "id") int id, ModelMap modelMap, HttpSession httpSession) {
@@ -88,6 +96,9 @@ public class StudentController {
 			return "login";
 		}
 	}
+
+//===============================================================================================================//
+//===============================================================================================================//
 
 	@RequestMapping(path = "/update-student", method = RequestMethod.POST)
 	protected String updateStudent(@RequestParam(name = "id") int id, @RequestParam(name = "name") String name,
@@ -103,6 +114,9 @@ public class StudentController {
 		return "students";
 	}
 
+//===============================================================================================================//
+//================================================================================================================//
+
 	@RequestMapping(path = "/student/mobile")
 	protected String findStudentByMobile(@RequestParam(name = "mobile") long mobile, ModelMap modelMap) {
 		Student student = studentService.findStudentByMobile(mobile);
@@ -110,7 +124,22 @@ public class StudentController {
 			modelMap.addAttribute("student", student);
 		else
 			modelMap.addAttribute("message", "Student not found");
-		return "students";
+		return "student_mobile";
 	}
+
+//==================================================================================================================//
+//===================================================================================================================//
+
+	
+	   @RequestMapping(path = "/student/name") protected String
+	   findStudentByName(@RequestParam(name = "name") String name, ModelMap
+	   modelMap) { List<Student> student = studentService.findStudentByName(name);
+	   if(student != null) 
+		   	modelMap.addAttribute("students", student); 
+	   else
+		   modelMap.addAttribute("message", "Student not found");
+	   return "student_name";
+	   }
+	 
 
 }

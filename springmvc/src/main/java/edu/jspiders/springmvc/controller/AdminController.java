@@ -15,11 +15,12 @@ import edu.jspiders.springmvc.service.AdminService;
 @Controller
 public class AdminController {
 
+	
 	@Autowired
 	private AdminService adminService;
 
 	@RequestMapping(path = "/add-admin", method = RequestMethod.POST)
-	protected String addAdmin(@RequestParam(name = "email") String email,
+	protected String addAdmin1(@RequestParam(name = "email") String email,
 			@RequestParam(name = "password") String password, ModelMap modelMap) {
 		boolean adminAdded = adminService.addAdmin(email, password);
 		if (adminAdded) {
@@ -30,7 +31,12 @@ public class AdminController {
 			return "sign_up";
 		}
 	}
-
+						//===This method working properly==//
+//=========================================================================================//
+//============================Response page of login page=================================//
+//========================================================================================//
+	
+	
 	@RequestMapping(path = "/auth-admin", method = RequestMethod.POST)
 	protected String authenticateAdmin(@RequestParam(name = "email") String email,
 			@RequestParam(name = "password") String password, ModelMap modelMap, HttpSession httpSession) {
@@ -43,26 +49,36 @@ public class AdminController {
 			return "login";
 		}
 	}
-
+//=====================================================================================//
+//=====================================================================================//
+	
 	@RequestMapping(path = "/delete-admin")
-	protected String deleteAdmin(@RequestParam(name = "id") int id, ModelMap modelMap) {
+	private String deleteAdmin(@RequestParam(name = "id") int id, ModelMap modelMap) {
 		boolean adminDeleted = adminService.deleteAdmin(id);
-		if (adminDeleted) {
+		if(adminDeleted) {
 			modelMap.addAttribute("message", "Admin deleted");
 			return "login";
-		} else {
+		}else {
 			modelMap.addAttribute("message", "Something went wrong");
 			return "home";
 		}
+	
 	}
-
+	
+//=====================================================================================//
+//=====================================================================================//
+	
 	@RequestMapping(path = "/edit-admin")
 	protected String editAdmin(@RequestParam(name = "id") int id, ModelMap modelMap) {
 		Admin admin = adminService.findAdminById(id);
 		modelMap.addAttribute("admin", admin);
 		return "edit_admin";
 	}
+	
+//=====================================================================================//
+//=====================================================================================//
 
+	
 	@RequestMapping(path = "/update-admin")
 	protected String updateAdmin(@RequestParam(name = "id") int id, @RequestParam(name = "email") String email,
 			@RequestParam(name = "password") String password, ModelMap modelMap) {
@@ -73,7 +89,8 @@ public class AdminController {
 			modelMap.addAttribute("message", "Something went wrong");
 		return "home";
 	}
-
+	
+	
 	@RequestMapping(path = "/logout")
 	protected String logout(HttpSession httpSession) {
 		httpSession.invalidate();
@@ -81,3 +98,29 @@ public class AdminController {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

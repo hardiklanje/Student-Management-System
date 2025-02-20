@@ -7,21 +7,26 @@ import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import edu.jspiders.springmvc.dao.StudentDAO;
 import edu.jspiders.springmvc.dto.Student;
 
 @Component
 public class StudentService {
-
+	
 	@Autowired
 	private StudentDAO studentDAO;
 
 	public boolean addStudent(String name, String email, long mobile, String course) {
+
 		Student student = new Student();
 		student.setName(name);
 		student.setEmail(email);
 		student.setMobile(mobile);
 		student.setCourse(course);
+		
+//==========================================================================//
+//==========================================================================//
 		try {
 			studentDAO.addStudent(student);
 			return true;
@@ -30,6 +35,9 @@ public class StudentService {
 			return false;
 		}
 	}
+	
+//================Method for Returning all students Data==================//
+//=======================================================================//
 
 	public List<Student> findAllStudents() {
 		List<Student> students = studentDAO.findAllStudents();
@@ -39,6 +47,9 @@ public class StudentService {
 			return null;
 	}
 
+//====================================================================//
+//====================================================================//
+	
 	public boolean deleteStudentById(int id) {
 		try {
 			studentDAO.deleteStudentById(id);
@@ -48,10 +59,16 @@ public class StudentService {
 			return false;
 		}
 	}
+	
+//=================================================================================//
+//================================================================================//
 
-	public Student findStudentById(int id) {
+	public Student findStudentById(int id) {		
 		return studentDAO.findStudentById(id);
 	}
+	
+//================================Updating Student details===========================//
+//====================================================================================//
 
 	public boolean updateStudent(int id, String name, String email, long mobile, String course) {
 		try {
@@ -62,14 +79,49 @@ public class StudentService {
 			return false;
 		}
 	}
+	
+//================================================================================================================//
+//================================================================================================================//
+	
 
-	public Student findStudentByMobile(long mobile) {
-		try {
-			return studentDAO.findStudentByMobile(mobile);
-		} catch (NoResultException e) {
-			e.printStackTrace();
+	public Student findStudentByMobile(long mobile) 
+	{
+		try 
+		{
+			return studentDAO.findStudentBymobile(mobile);
+		} catch (NoResultException e) 
+		{
+			e.printStackTrace();	
 			return null;
 		}
 	}
 
+//=============================================================================================================//
+//==============================================================================================================//
+	
+	
+	public List<Student> findStudentByName(String name) 
+	{
+		List<Student> students = studentDAO.findStudentByname(name);
+		if (students.size() > 0)
+			return students;
+		else
+			return null;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

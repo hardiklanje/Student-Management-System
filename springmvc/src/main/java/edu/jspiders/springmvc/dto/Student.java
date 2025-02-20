@@ -31,5 +31,4 @@ public class Student {
 	private long mobile;
 	@Column(nullable = false, unique = false)
 	private String course;
-
 }

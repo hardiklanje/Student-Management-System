@@ -1,6 +1,7 @@
 package edu.jspiders.springmvc.dto;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,13 +20,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = false, unique = true)
 	private String email;
-	@Column(nullable = false, unique = false)
+	@Column(nullable = false,unique = false)
 	private String password;
-
 }

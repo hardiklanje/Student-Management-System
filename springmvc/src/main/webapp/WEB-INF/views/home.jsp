@@ -1,6 +1,6 @@
 <%@page import="edu.jspiders.springmvc.dto.Admin"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,9 +106,11 @@ a:hover {
 	int id = admin.getId();
 	%>
 	<nav>
-		<a href="add-student-page">Add Student</a> <a href="students">All
-			Students</a> <a href="edit-admin?id=<%=id%>">Edit Account</a> <a
-			href="delete-admin?id=<%=id%>">Delete Account</a> <a href="logout">Logout</a>
+		<a href="add-student-page">Add Student</a> 
+		<a href="students">All Students</a> 
+		<a href="edit-admin?id=<%=id%>">Edit Account</a> 
+		<a href="delete-admin?id=<%=id%>">Delete Account</a>
+		<a href="logout">Logout</a>
 	</nav>
 	<div align="center">
 		<h1>WELCOME TO WEB BLOGGER</h1>

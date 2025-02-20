@@ -12,36 +12,53 @@ import edu.jspiders.springmvc.dto.Admin;
 
 @Component
 public class AdminDAO {
-
+	
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager entityManager;
 	private EntityTransaction entityTransaction;
-
+	
+//==================================================================================================//
+//====================opening connection for Data input/output======================================//
+//==================================================================================================//
+	
 	private void openConnection() {
 		entityManagerFactory = Persistence.createEntityManagerFactory("springmvc");
 		entityManager = entityManagerFactory.createEntityManager();
-		entityTransaction = entityManager.getTransaction();
+		entityTransaction = entityManager.getTransaction();		
 	}
-
+	
+//=============================This method is used to ============================================//
+//=====================Closing Connection to avoid data leakage==================================//	
+//===============================================================================================//
 	private void closeConnection() {
-		if (entityManagerFactory != null)
+		if(entityManagerFactory  != null)
 			entityManagerFactory.close();
-		if (entityManager != null)
+		if(entityManager != null)
 			entityManager.close();
-		if (entityTransaction != null) {
-			if (entityTransaction.isActive())
+		if(entityTransaction != null) {
+			if(entityTransaction.isActive())
 				entityTransaction.rollback();
 		}
 	}
-
+	
+//======================This add admin method is used for ======================================//
+//=============Opening Connection for adding data from sign-up-page ============================//
+//===============================================================================================//
+	
 	public void addAdmin(Admin admin) {
 		openConnection();
 		entityTransaction.begin();
 		entityManager.persist(admin);
 		entityTransaction.commit();
 		closeConnection();
+		
 	}
-
+	
+	
+//==================================================================================================//
+//=============== This method for authenticate user which try to login from  login page============//
+//==========================if present then return result==========================================//
+	
 	public Admin authenticateAdmin(String email, String password) {
 		openConnection();
 		Query query = entityManager
@@ -53,6 +70,9 @@ public class AdminDAO {
 		return admin;
 	}
 
+//===============================================================================================//
+//===============================================================================================//
+	
 	public void deleteAdmin(int id) {
 		openConnection();
 		entityTransaction.begin();
@@ -61,14 +81,15 @@ public class AdminDAO {
 		entityTransaction.commit();
 		closeConnection();
 	}
-
+	
 	public Admin findAdminById(int id) {
 		openConnection();
 		Admin admin = entityManager.find(Admin.class, id);
 		closeConnection();
 		return admin;
+		
 	}
-
+	
 	public void updateAdmin(int id, String email, String password) {
 		openConnection();
 		entityTransaction.begin();
@@ -78,6 +99,8 @@ public class AdminDAO {
 		entityManager.persist(admin);
 		entityTransaction.commit();
 		closeConnection();
-	}
-
+	}	
+	
 }
+
+
